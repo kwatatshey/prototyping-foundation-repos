@@ -1,0 +1,89 @@
+name: Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment_name:
+        description: 'destroy github environment'
+        required: true
+        default: 'destroy'
+  pull_request:
+  issue_comment:
+    types: [created, edited]
+
+env:
+  TF_IN_AUTOMATION: true
+  AWS_REGION: us-east-1
+  AWS_ASSUMED_ROLE_ARN: arn:aws:iam::955769636964:role/deployment-terraform-prototyping-us-east-1-955769636964
+  AWS_ROLE_SESSION_NAME: eks-role-session
+  DEBUG: true
+  WORKING_DIRECTORY: ./deploy/eks
+
+jobs:
+  destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+
+    environment: destroy
+    defaults:
+      run:
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+    env:
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment_name || 'default-environment' }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install tfenv
+        run: |
+          git clone --depth=1 https://github.com/tfutils/tfenv.git ${HOME}/.tfenv
+          echo 'export PATH="${HOME}/.tfenv/bin:${PATH}"' >> ${HOME}/.bash_profile
+          mkdir -p ${HOME}/.local/bin
+          ln -s ${HOME}/.tfenv/bin/* ${HOME}/.local/bin
+          export PATH="${HOME}/.tfenv/bin:${PATH}"
+          . ${HOME}/.profile
+
+      - name: Setup Terraform (tfenv)
+        run: |
+          TF_VERSION=$(cat .terraform-version)
+          tfenv install $TF_VERSION
+          tfenv use $TF_VERSION
+
+      - name: Verify Terraform Version
+        run: terraform --version
+
+      - name: Configure AWS credentials with OIDC assume role 
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ env.AWS_ASSUMED_ROLE_ARN }}
+          role-session-name: ${{ env.AWS_ROLE_SESSION_NAME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Check ENVIRONMENT_NAME
+        run: echo "Environment Name is $ENVIRONMENT_NAME"
+
+      - name: Setup Terraform Init
+        run: |
+          terraform init -backend-config="environments/${ENVIRONMENT_NAME}/${ENVIRONMENT_NAME}.hcl"
+
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve -var-file="environments/${ENVIRONMENT_NAME}/${ENVIRONMENT_NAME}.tfvars"
+
+  comment_on_destroy:
+    name: Comment on Destroy
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'issue_comment' &&
+      github.event.comment.body == 'destroy competely' &&
+      github.actor == 'assassin010'
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Add Comment
+        uses: allthatjazzleo/actions-pull-request-add-comment@master
+        with:
+          message: 'The destroy operation has been completed.'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
