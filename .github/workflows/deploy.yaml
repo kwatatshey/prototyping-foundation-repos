@@ -28,7 +28,7 @@ env:
   AWS_ROLE_SESSION_NAME: eks-role-session
   DEBUG: true
   WORKING_DIRECTORY: ./eks-argo-karpenter
-  TERRAFORM_VERSION: $TF_VERSION
+  TERRAFORM_VERSION: 1.8.1
 
 jobs:
   deploy_dev:
