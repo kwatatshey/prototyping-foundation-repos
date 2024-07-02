@@ -28,6 +28,7 @@ env:
   AWS_ROLE_SESSION_NAME: eks-role-session
   DEBUG: true
   WORKING_DIRECTORY: ./eks-argo-karpenter
+  TERRAFORM_VERSION: $TF_VERSION
 
 jobs:
   deploy_dev:
@@ -74,6 +75,20 @@ jobs:
 
       - name: Check ENVIRONMENT_NAME
         run: echo "Environment Name is $ENVIRONMENT_NAME"
+
+      - name: Terraform initialize
+        uses: hashicorp/terraform-github-actions@v0.6.3
+        env:
+          GIT_SSH_COMMAND: "echo '${{ secrets.SSH_PRIVATE_KEY }}' > id_rsa
+            && echo 'github.com ssh-rsa ${{ env.GITHUB_COM_SSH_RSA_PUBLIC_KEY }}' > known_hosts
+            && chmod 400 id_rsa known_hosts
+            && ssh -i ./id_rsa -o UserKnownHostsFile=./known_hosts"
+        with:
+          tf_actions_version: ${{ env.TERRAFORM_VERSION }}
+          tf_actions_subcommand: 'init'
+          tf_actions_working_dir: ${{ env.WORKING_DIRECTORY}}
+          tf_actions_comment: true
+
 
       - name: Setup Terraform Init
         run: |

@@ -14,7 +14,6 @@ variable "app_name" {
   description = "Name of the application."
 }
 
-
 # for base/network.tf
 variable "cluster_name" {
   type        = string
