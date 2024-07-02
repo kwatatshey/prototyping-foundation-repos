@@ -9,7 +9,6 @@ variable "environment" {
   description = "Environment name."
 }
 
-
 variable "app_name" {
   type        = string
   description = "Name of the application."
@@ -235,7 +234,4 @@ variable "team_tag" {
   type        = string
   default     = "DevOps"
 }
-
-
-# Cognito
 
