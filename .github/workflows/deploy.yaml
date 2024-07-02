@@ -10,10 +10,10 @@ on:
 
   pull_request:
     paths:
-      - 'deploy/eks/**'
+      - 'eks-argo-karpenter**'
   push:
     paths:
-      - 'deploy/eks/**'
+      - 'eks-argo-karpenter/**'
     branches:
       - main
 
@@ -27,7 +27,7 @@ env:
   AWS_ASSUMED_ROLE_ARN: arn:aws:iam::955769636964:role/deployment-terraform-prototyping-us-east-1-955769636964
   AWS_ROLE_SESSION_NAME: eks-role-session
   DEBUG: true
-  WORKING_DIRECTORY: ./deploy/eks
+  WORKING_DIRECTORY: ./eks-argo-karpenter
 
 jobs:
   deploy_dev:
