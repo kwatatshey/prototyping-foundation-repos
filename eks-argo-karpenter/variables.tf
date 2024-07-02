@@ -3,7 +3,6 @@ variable "resource_prefix" {
   type        = string
   description = "Prefix to be used on each infrastructure object Name created in AWS."
 }
-
 variable "environment" {
   type        = string
   description = "Environment name."
