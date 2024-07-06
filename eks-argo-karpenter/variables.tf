@@ -60,10 +60,10 @@ variable "spot_termination_handler_chart_namespace" {
   type        = string
   description = "Kubernetes namespace to deploy EKS Spot termination handler Helm chart."
 }
-variable "dns_base_domain" {
-  type        = string
-  description = "DNS Zone name to be used from EKS Ingress."
-}
+# variable "dns_base_domain" {
+#   type        = string
+#   description = "DNS Zone name to be used from EKS Ingress."
+# }
 variable "ingress_gateway_name" {
   type        = string
   description = "Load-balancer service name."
@@ -86,30 +86,26 @@ variable "ingress_gateway_chart_version" {
   type        = string
   description = "Ingress Gateway Helm chart version."
 }
-variable "external_dns_iam_role" {
-  type        = string
-  description = "IAM Role Name associated with external-dns service."
-}
-variable "external_dns_chart_name" {
-  type        = string
-  description = "Chart Name associated with external-dns service."
-}
-variable "external_dns_chart_repo" {
-  type        = string
-  description = "Chart Repo associated with external-dns service."
-}
-variable "external_dns_chart_version" {
-  type        = string
-  description = "Chart Repo associated with external-dns service."
-}
-variable "external_dns_values" {
-  type        = map(string)
-  description = "Values map required by external-dns service."
-}
-variable "namespaces" {
-  type        = list(string)
-  description = "List of namespaces to be created in our EKS Cluster."
-}
+# variable "external_dns_iam_role" {
+#   type        = string
+#   description = "IAM Role Name associated with external-dns service."
+# }
+# variable "external_dns_chart_name" {
+#   type        = string
+#   description = "Chart Name associated with external-dns service."
+# }
+# variable "external_dns_chart_repo" {
+#   type        = string
+#   description = "Chart Repo associated with external-dns service."
+# }
+# variable "external_dns_chart_version" {
+#   type        = string
+#   description = "Chart Repo associated with external-dns service."
+# }
+# variable "external_dns_values" {
+#   type        = map(string)
+#   description = "Values map required by external-dns service."
+# }
 
 variable "admin_roles" {
   type        = list(string)
@@ -174,10 +170,10 @@ variable "fargate_profiles" {
 }
 
 
-variable "argocd_subdomain" {
-  description = "ArgoCD subdomain"
-  type        = string
-}
+# variable "argocd_subdomain" {
+#   description = "ArgoCD subdomain"
+#   type        = string
+# }
 
 variable "argocd_ingress_name" {
   description = "ArgoCD ingress"

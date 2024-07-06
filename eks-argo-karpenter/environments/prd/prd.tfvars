@@ -37,10 +37,6 @@ eks_managed_node_groups = {
       "t3a.large",
       "t3.xlarge"
     ]
-    # tags = {
-    #   "Name" = "my-app-eks-x86"
-
-    # }
     capacity_type = "SPOT"
     # use_custom_launch_template = false
     # disk_size                  = 300
@@ -58,10 +54,6 @@ eks_managed_node_groups = {
       "c7g.medium",
       "c7g.large"
     ]
-    # tags = {
-    #   "Name" = "my-app-eks-arm"
-
-    # }
     capacity_type = "ON_DEMAND"
     # use_custom_launch_template = false
     # disk_size                  = 300
@@ -96,21 +88,21 @@ spot_termination_handler_chart_namespace = "kube-system"
 #------------------------------------------------------------------------------
 # EXTERNAL DNS - CONFIG MODULE
 #------------------------------------------------------------------------------
-external_dns_iam_role      = "external-dns"
-external_dns_chart_name    = "external-dns"
-external_dns_chart_repo    = "https://kubernetes-sigs.github.io/external-dns/"
-external_dns_chart_version = "1.9.0"
+# external_dns_iam_role      = "external-dns"
+# external_dns_chart_name    = "external-dns"
+# external_dns_chart_repo    = "https://kubernetes-sigs.github.io/external-dns/"
+# external_dns_chart_version = "1.9.0"
 
-external_dns_values = {
-  "image.repository"   = "k8s.gcr.io/external-dns/external-dns",
-  "image.tag"          = "v0.11.0",
-  "logLevel"           = "info",
-  "logFormat"          = "json",
-  "triggerLoopOnEvent" = "true",
-  "interval"           = "5m",
-  "policy"             = "sync",
-  "sources"            = "{ingress}"
-}
+# external_dns_values = {
+#   "image.repository"   = "k8s.gcr.io/external-dns/external-dns",
+#   "image.tag"          = "v0.11.0",
+#   "logLevel"           = "info",
+#   "logFormat"          = "json",
+#   "triggerLoopOnEvent" = "true",
+#   "interval"           = "5m",
+#   "policy"             = "sync",
+#   "sources"            = "{ingress}"
+# }
 
 #------------------------------------------------------------------------------
 # IAM - CONFIG MODULE
@@ -124,15 +116,10 @@ developer_user_group = "devepers-user-group"
 #------------------------------------------------------------------------------
 # INGRESS - CONFIG MODULE
 #------------------------------------------------------------------------------
-dns_base_domain          = "solutionsconsulting.net"
+# dns_base_domain          = "solutionsconsulting.net"
 ingress_gateway_name     = "aws-load-balancer-controller"
 ingress_gateway_iam_role = "aws-load-balancer-controller"
 
-# ns_map_ingress_gateway_iam_role = {
-#   "kube-system" = "aws-load-balancer-controller-kube-system"
-#   "argocd"      = "aws-load-balancer-controller-argocd"
-#   # Add more namespace-IAM role mappings as needed
-# }
 
 ingress_gateway_chart_name    = "aws-load-balancer-controller"
 ingress_gateway_chart_repo    = "https://aws.github.io/eks-charts"
@@ -141,7 +128,6 @@ ingress_gateway_chart_version = "1.4.1"
 #------------------------------------------------------------------------------
 # NAMESPACE - CONFIG MODULE
 #------------------------------------------------------------------------------
-namespaces = ["argocd", "nginx"]
 
 
 
@@ -187,6 +173,6 @@ fargate_profiles = {
   # }
 }
 
-argocd_subdomain        = "argocd"
+# argocd_subdomain        = "argocd"
 argocd_ingress_name     = "argocd-ingress"
 argocd_ingress_alb_name = "argocd-alb"
