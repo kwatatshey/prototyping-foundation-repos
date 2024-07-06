@@ -73,7 +73,6 @@ variable "ingress_gateway_iam_role" {
   description = "IAM Role Name associated with load-balancer service."
 }
 
-
 variable "ingress_gateway_chart_name" {
   type        = string
   description = "Ingress Gateway Helm chart name."
@@ -120,7 +119,6 @@ variable "developer_users" {
   type        = list(string)
   description = "List of Kubernetes developers."
 }
-
 variable "developer_user_group" {
   type        = string
   description = "Name of the kube group for developers."
@@ -149,7 +147,6 @@ variable "iam_role_nodes_additional_policies" {
   description = "List of additional IAM policies to attach to EKS managed node groups."
 }
 
-
 variable "oic_role_configurations" {
   type = map(object({
     role_name           = string
@@ -168,7 +165,6 @@ variable "fargate_profiles" {
     additional_policies = map(string)
   }))
 }
-
 
 # variable "argocd_subdomain" {
 #   description = "ArgoCD subdomain"
@@ -191,20 +187,16 @@ variable "argocd_ingress_alb_name" {
   type        = string
 }
 
-
-
 variable "iam_role_arn" {
   description = "Admin role ARN"
   type        = string
 }
-
 
 variable "admin_role_arn" {
   description = "Admin role ARN"
   type        = string
   default     = "arn:aws:iam::955769636964:role/eks-admin-role"
 }
-
 
 variable "project_owner_tag" {
   description = "The project owner tag"
