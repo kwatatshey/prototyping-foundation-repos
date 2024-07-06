@@ -455,15 +455,10 @@ module "cognito" {
   ]
 }
 
-data "aws_secretsmanager_secret" "ssh_private_key" {
-  name = "sshPrivateKey"
-}
+# data "aws_secretsmanager_secret" "ssh_private_key" {
+#   name = "sshPrivateKey"
+# }
 
-data "aws_secretsmanager_secret_version" "ssh_private_key" {
-  secret_id = data.aws_secretsmanager_secret.ssh_private_key.id
-}
-
-output "ssh_private_key" {
-  value     = data.aws_secretsmanager_secret_version.ssh_private_key.secret_string
-  sensitive = true
-}
+# data "aws_secretsmanager_secret_version" "ssh_private_key" {
+#   secret_id = data.aws_secretsmanager_secret.ssh_private_key.id
+# }
