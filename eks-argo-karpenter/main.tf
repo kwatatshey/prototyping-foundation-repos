@@ -195,7 +195,7 @@ module "security-alb-ingress" {
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-alb-ingress"
   description                     = "Security group for ALB ingress"
   vpc_id                          = module.vpc.vpc_id
-  enable_source_security_group_id = false // Corrected to false
+  enable_source_security_group_id = false
 
   ingress_with_cidr_blocks = [
     {
@@ -307,7 +307,7 @@ module "security-node" {
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-node"
   description                     = "Security group for nodes"
   vpc_id                          = module.vpc.vpc_id
-  enable_source_security_group_id = true // Corrected to true
+  enable_source_security_group_id = true
 
   ingress_with_cidr_blocks = [
     {
