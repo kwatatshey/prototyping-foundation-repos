@@ -20,9 +20,6 @@ module "cluster" {
   #   control_plane_subnet_ids = module.vpc.private_subnets
 }
 
-
-
-
 module "fargate" {
   # source                    = "./base/fargate"
   source                    = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/fargate"
@@ -99,7 +96,6 @@ module "config" {
 
 #   # other variables...
 # }
-
 
 module "nodes" {
   # source                            = "./base/nodes" # Update with your correct path
@@ -359,8 +355,6 @@ module "security-node" {
   ]
   depends_on = [module.security-alb-ingress]
 }
-
-
 
 module "cognito" {
   # source                            = "./auths/cognito"
