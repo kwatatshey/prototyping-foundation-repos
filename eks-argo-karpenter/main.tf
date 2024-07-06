@@ -113,7 +113,6 @@ module "nodes" {
   cluster_version                   = module.cluster.cluster_version
   cluster_service_cidr              = module.cluster.cluster_service_cidr
   subnet_ids                        = module.vpc.private_subnets
-  vpc_id                            = module.vpc.vpc_id
   eks_managed_node_groups           = var.eks_managed_node_groups
   cluster_primary_security_group_id = module.cluster.cluster_primary_security_group_id
   vpc_security_group_ids = [
