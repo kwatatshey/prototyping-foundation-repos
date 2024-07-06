@@ -189,9 +189,7 @@ module "addons" {
 module "security-alb-ingress" {
   # source                          = "./security"
   source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security"
-  app_name                        = var.app_name
   environment                     = var.environment
-  resource_prefix                 = var.resource_prefix
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-alb-ingress"
   description                     = "Security group for ALB ingress"
   vpc_id                          = module.vpc.vpc_id
@@ -301,9 +299,7 @@ module "security-alb-ingress" {
 module "security-node" {
   # source                          = "./security"
   source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security"
-  app_name                        = var.app_name
   environment                     = var.environment
-  resource_prefix                 = var.resource_prefix
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-node"
   description                     = "Security group for nodes"
   vpc_id                          = module.vpc.vpc_id
