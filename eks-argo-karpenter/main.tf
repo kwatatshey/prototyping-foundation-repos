@@ -1,4 +1,4 @@
-# create EKS cluster
+
 module "cluster" {
   # source                         = "./base/cluster"
   source                         = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/cluster"
@@ -37,7 +37,6 @@ module "fargate" {
   app_name                  = var.app_name
   depends_on                = [module.nodes]
 }
-
 
 # provision EKS cluster
 module "config" {
@@ -88,7 +87,6 @@ module "config" {
 
   ]
 }
-
 
 
 # module "observability-accelerator" {
@@ -178,7 +176,6 @@ module "addons" {
 #   environment              = var.environment
 #   app_name                 = var.app_name
 # }
-
 
 
 # Module for ALB Ingress Security Group
