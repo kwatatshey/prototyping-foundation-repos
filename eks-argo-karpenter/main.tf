@@ -138,7 +138,6 @@ module "kms" {
   cluster_name         = module.cluster.cluster_name
 }
 
-
 module "vpc" {
   # source                  = "./network/vpc"
   source                  = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//network/vpc"

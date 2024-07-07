@@ -63,6 +63,17 @@ jobs:
       - name: Check ENVIRONMENT_NAME
         run: echo "Environment Name is $ENVIRONMENT_NAME"
 
+      - name: Set up SSH for Git
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Setup Terraform Init
         run: |
           terraform init -backend-config="environments/${ENVIRONMENT_NAME}/${ENVIRONMENT_NAME}.hcl"
