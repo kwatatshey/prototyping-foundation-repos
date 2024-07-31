@@ -80,15 +80,13 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -var-file="environments/${ENVIRONMENT_NAME}/${ENVIRONMENT_NAME}.tfvars"
-
   comment_on_destroy:
     name: Comment on Destroy
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'issue_comment' &&
-      github.event.comment.body == 'destroy competely' &&
-      github.actor == 'assassin010'
-    
+      github.event.comment.body == 'destroy completely' &&
+      github.actor == 'assassin010' 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
