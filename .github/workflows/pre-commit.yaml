@@ -29,6 +29,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up SSH for Git
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ORG_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+        env:
+          ORG_SSH_PRIVATE_KEY: ${{ secrets.ORG_SSH_PRIVATE_KEY }}
+
       - name: Get root directories
         id: dirs
         uses: clowdhaus/terraform-composite-actions/directories@v1.9.0
@@ -46,6 +57,17 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up SSH for Git
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ORG_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+        env:
+          ORG_SSH_PRIVATE_KEY: ${{ secrets.ORG_SSH_PRIVATE_KEY }}
 
       - uses: dorny/paths-filter@v3
         id: changes
@@ -90,6 +112,17 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Set up SSH for Git
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.ORG_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/id_rsa
+        env:
+          ORG_SSH_PRIVATE_KEY: ${{ secrets.ORG_SSH_PRIVATE_KEY }}
 
       - uses: dorny/paths-filter@v3
         id: changes
