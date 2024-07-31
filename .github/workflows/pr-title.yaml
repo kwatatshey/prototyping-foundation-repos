@@ -44,4 +44,3 @@ jobs:
           wip: true
           validateSingleCommit: false
           githubBaseUrl: https://api.github.com
-

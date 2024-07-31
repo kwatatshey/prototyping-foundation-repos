@@ -220,4 +220,3 @@ variable "team_tag" {
   type        = string
   default     = "DevOps"
 }
-
