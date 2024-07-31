@@ -12,6 +12,7 @@ on:
 
 jobs:
   get-token:
+    environment: development
     name: Print Token
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -32,6 +33,7 @@ jobs:
             https://api.github.com/repos/kwatatshey/prototyping-foundation-repos/actions/runners/registration-token
 
   validate-pr-title:
+    environment: development
     name: Validate PR Title
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
