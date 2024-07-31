@@ -38,6 +38,10 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      repository-projects: write
+      actions: read
+      checks: read
+      id-token: write
 
     steps:
       - name: Checkout repository
