@@ -85,7 +85,6 @@ module "config" {
   ]
 }
 
-
 # module "observability-accelerator" {
 #   source                             = "./config/observability-accelerator"
 #   cluster_name                       = module.cluster.cluster_name
@@ -160,7 +159,6 @@ module "addons" {
   oidc_provider_arn                  = module.cluster.oidc_provider_arn
   cluster_certificate_authority_data = module.cluster.cluster_certificate_authority_data
 }
-
 
 # module "irsa" {
 #   source                   = "./base/irsa"
