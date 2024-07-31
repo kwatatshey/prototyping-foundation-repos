@@ -1,76 +1,3 @@
-# name: 'PR title'
-
-# on:
-#   push:
-#     branches:
-#       - eks
-#   pull_request:
-#     types:
-#       - opened
-#       - edited
-#       - synchronize
-
-# jobs:
-#   get-token:
-#     environment: development
-#     name: Print Token
-#     runs-on: ubuntu-latest
-#     if: github.event_name == 'push'
-#     permissions:
-#       contents: write
-#       id-token: write
-
-#     steps:
-#       - name: Check out code
-#         uses: actions/checkout@v2
-
-#       - name: Get registration token
-#         id: getRegToken
-#         run: |
-#           curl -X POST \
-#             -H "Accept: application/vnd.github.v3+json" \
-#             -H "Authorization: token ${{ secrets.PAT_TOKEN }}" \
-#             https://api.github.com/repos/kwatatshey/prototyping-foundation-repos/actions/runners/registration-token
-
-#   validate-pr-title:
-#     environment: development
-#     name: Validate PR Title
-#     runs-on: ubuntu-latest
-#     if: github.event_name == 'pull_request'
-#     permissions:
-#       contents: write
-#       pull-requests: write
-#       repository-projects: write
-#       actions: read
-#       checks: read
-#       statuses: write
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-
-#       - name: Validate PR title
-#         uses: amannn/action-semantic-pull-request@v5.4.0
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-#         with:
-#           types: |
-#             fix
-#             feat
-#             docs
-#             ci
-#             chore
-#           requireScope: false
-#           subjectPattern: ^[A-Z].+$
-#           subjectPatternError: |
-#             The subject "{subject}" found in the pull request title "{title}"
-#             didn't match the configured pattern. Please ensure that the subject
-#             starts with an uppercase character.
-#           wip: true
-#           validateSingleCommit: false
-
-
-
 name: 'Validate PR title'
 
 on:
@@ -81,9 +8,11 @@ on:
       - synchronize
 
 
-permissions:
-  pull-requests: read
-  statuses: write
+# permissions:
+#   pull-requests: write
+#   statuses: write
+permissions: write-all
+
 jobs:
   main:
     name: Validate PR title
