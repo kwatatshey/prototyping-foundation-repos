@@ -1,67 +1,52 @@
-# name: 'Validate PR title'
-
-# on:
-#   pull_request_target:
-#     types:
-#       - opened
-#       - edited
-#       - synchronize
-
-# jobs:
-#   verify:
-#     name: Verify PAT permissions
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Check repository access
-#         run: |
-#           curl -H "Authorization: token ${{ secrets.PAT_TOKEN }}" https://api.github.com/repos/${{ github.repository }}
-#       - name: Check workflow permissions
-#         run: |
-#           curl -H "Authorization: token ${{ secrets.PAT_TOKEN }}" https://api.github.com/repos/${{ github.repository }}/actions/permissions/workflow
-
-#   main:
-#     name: Validate PR title
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: amannn/action-semantic-pull-request@v5.4.0
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-#         with:
-#           types: |
-#             fix
-#             feat
-#             docs
-#             ci
-#             chore
-#           requireScope: false
-#           subjectPattern: ^[A-Z].+$
-#           subjectPatternError: |
-#             The subject "{subject}" found in the pull request title "{title}"
-#             didn't match the configured pattern. Please ensure that the subject
-#             starts with an uppercase character.
-#           wip: true
-#           validateSingleCommit: false
-
 name: 'Validate PR title'
 
 on:
-  pull_request:
+  push:
+    branches:
+      - eks
+  pull_request_target:
     types:
       - opened
       - edited
       - synchronize
 
 jobs:
-  main:
-    name: Validate PR title
+  get-token:
+    name: Print Token
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Get registration token
+        id: getRegToken
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/kwatatshey/prototyping-foundation-repos/actions/runners/registration-token
+
+  validate-pr-title:
+    name: Validate PR Title
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_target'
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
       - name: Validate PR title
         uses: amannn/action-semantic-pull-request@v5.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         with:
           types: |
             fix
