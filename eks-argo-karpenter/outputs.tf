@@ -1,9 +1,11 @@
 output "alb_ingress_security_group_id" {
-  value = module.security-alb-ingress.security_group_id
+  description = "The security group id for the ALB ingress controller"
+  value       = module.security-alb-ingress.security_group_id
 }
 
 output "node_security_group_id" {
-  value = module.security-node.security_group_id
+  description = "The security group id for the EKS nodes"
+  value       = module.security-node.security_group_id
 }
 
 
@@ -24,20 +26,24 @@ locals {
 
 
 output "cluster_endpoint" {
-  value = module.cluster.cluster_endpoint
+  description = "The endpoint for the EKS cluster"
+  value       = module.cluster.cluster_endpoint
 }
 
 
 output "cluster_name" {
-  value = module.cluster.cluster_name
+  description = "The name of the EKS cluster"
+  value       = module.cluster.cluster_name
 }
 
 output "public_subnets" {
-  value = module.vpc.public_subnets
+  description = "The public subnets"
+  value       = module.vpc.public_subnets
 }
 
 output "private_subnets" {
-  value = module.vpc.private_subnets
+  description = "The private subnets"
+  value       = module.vpc.private_subnets
 }
 
 # Cognito
