@@ -140,6 +140,7 @@ variable "eks_managed_node_groups" {
       associate_public_ip_address = bool
     }))
   }))
+  description = "List of EKS managed node groups."
 }
 
 variable "iam_role_nodes_additional_policies" {
