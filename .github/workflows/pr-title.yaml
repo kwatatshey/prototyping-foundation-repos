@@ -42,3 +42,5 @@ jobs:
             starts with an uppercase character.
           wip: true
           validateSingleCommit: false
+          githubBaseUrl: https://api.github.com
+
