@@ -53,7 +53,7 @@ jobs:
       - name: Verify Terraform Version
         run: terraform --version
 
-      - name: Configure AWS credentials with OIDC assume role 
+      - name: Configure AWS credentials with OIDC assume role
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ env.AWS_ASSUMED_ROLE_ARN }}
@@ -86,7 +86,7 @@ jobs:
     if: >-
       github.event_name == 'issue_comment' &&
       github.event.comment.body == 'destroy completely' &&
-      github.actor == 'assassin010' 
+      github.actor == 'assassin010'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
