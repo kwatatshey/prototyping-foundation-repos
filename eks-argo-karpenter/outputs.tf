@@ -1,11 +1,11 @@
 output "alb_ingress_security_group_id" {
   description = "The security group id for the ALB ingress controller"
-  value       = module.security-alb-ingress.security_group_id
+  value       = module.security_alb_ingress.security_group_id
 }
 
 output "node_security_group_id" {
   description = "The security group id for the EKS nodes"
-  value       = module.security-node.security_group_id
+  value       = module.security_node.security_group_id
 }
 
 

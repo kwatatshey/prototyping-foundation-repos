@@ -317,7 +317,7 @@ module "security_node" {
       to_port                  = 0
       protocol                 = -1
       description              = "Allow all incoming connections from ALB security group"
-      source_security_group_id = module.security-alb-ingress.security_group_id
+      source_security_group_id = module.security_alb_ingress.security_group_id
     },
   ]
 
