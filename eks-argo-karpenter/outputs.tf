@@ -14,9 +14,9 @@ data "aws_ssm_parameter" "github_ssh_private_key" {
   name = "/github/ssh_private_key"
 }
 
-locals {
-  ssh_private_key = data.aws_ssm_parameter.github_ssh_private_key.value
-}
+# locals {
+#   ssh_private_key = data.aws_ssm_parameter.github_ssh_private_key.value
+# }
 
 # output "base64_ssh_private_key" {
 #   sensitive   = true

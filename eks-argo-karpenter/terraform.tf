@@ -11,22 +11,22 @@ terraform {
       version = "~> 5.0, >= 5.31.0"
 
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "2.20.0"
-    }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.9.0"
-    }
-    kubectl = {
-      source  = "gavinbunney/kubectl"
-      version = "1.14.0"
-    }
-    time = {
-      source  = "hashicorp/time"
-      version = "0.9.1"
-    }
+    # kubernetes = {
+    #   source  = "hashicorp/kubernetes"
+    #   version = "2.20.0"
+    # }
+    # helm = {
+    #   source  = "hashicorp/helm"
+    #   version = "2.9.0"
+    # }
+    # kubectl = {
+    #   source  = "gavinbunney/kubectl"
+    #   version = "1.14.0"
+    # }
+    # time = {
+    #   source  = "hashicorp/time"
+    #   version = "0.9.1"
+    # }
   }
 }
 
@@ -50,10 +50,10 @@ provider "aws" {
   }
 }
 
-data "aws_region" "current" {}
+# data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
-locals {
-  region     = data.aws_caller_identity.current
-  account_id = data.aws_caller_identity.current.account_id
-}
+# locals {
+#   # region     = data.aws_caller_identity.current
+#   # account_id = data.aws_caller_identity.current.account_id
+# }
