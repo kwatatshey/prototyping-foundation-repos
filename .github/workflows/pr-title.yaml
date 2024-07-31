@@ -35,7 +35,8 @@ jobs:
             ci
             chore
           requireScope: false
-          subjectPattern: ^[A-Z].+$
+          # Relax the subject pattern to allow lowercase subjects if desired
+          subjectPattern: ^[a-zA-Z].+$
           subjectPatternError: |
             The subject "{subject}" found in the pull request title "{title}"
             didn't match the configured pattern. Please ensure that the subject
