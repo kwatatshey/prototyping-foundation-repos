@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - eks
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - edited
@@ -34,7 +34,7 @@ jobs:
   validate-pr-title:
     name: Validate PR Title
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_target'
+    if: github.event_name == 'pull_request'
     permissions:
       contents: write
       pull-requests: write
@@ -49,7 +49,7 @@ jobs:
       - name: Validate PR title
         uses: amannn/action-semantic-pull-request@v5.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         with:
           types: |
             fix
