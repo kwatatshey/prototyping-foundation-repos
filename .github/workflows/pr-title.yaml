@@ -49,7 +49,7 @@ jobs:
       - name: Validate PR title
         uses: amannn/action-semantic-pull-request@v5.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           types: |
             fix
@@ -65,3 +65,4 @@ jobs:
             starts with an uppercase character.
           wip: true
           validateSingleCommit: false
+
