@@ -14,8 +14,8 @@ module "cluster" {
   enable_creation_role_with_oidc = true
   oic_role_configurations        = var.oic_role_configurations
   cluster_additional_security_group_ids = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id
   ]
   #   control_plane_subnet_ids = module.vpc.private_subnets
 }
@@ -70,7 +70,7 @@ module "config" {
   developer_roles = var.developer_roles
   # karpenter_node_iam_role_name             = module.karpenter.node_iam_role_name
   developer_user_group          = var.developer_user_group
-  ALB_SECURITY_GROUP_ID         = module.security-alb-ingress.security_group_id
+  ALB_SECURITY_GROUP_ID         = module.security_alb_ingress.security_group_id
   EKS_CLUSTER_SECURITY_GROUP_ID = module.cluster.cluster_primary_security_group_id
   vpc_id                        = module.vpc.vpc_id
   private_subnets               = module.vpc.private_subnets
@@ -78,8 +78,8 @@ module "config" {
   argocd_ingress_alb_name       = var.argocd_ingress_alb_name
   # grafana_api_key               = true
   security_groups = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id,
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id,
     module.cluster.cluster_primary_security_group_id
 
   ]
@@ -106,8 +106,8 @@ module "nodes" {
   eks_managed_node_groups           = var.eks_managed_node_groups
   cluster_primary_security_group_id = module.cluster.cluster_primary_security_group_id
   vpc_security_group_ids = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id
   ]
   name            = each.key
   app_name        = var.app_name
@@ -350,7 +350,7 @@ module "security_node" {
       ipv6_cidr_blocks = "::/0"
     },
   ]
-  depends_on = [module.security-alb-ingress]
+  depends_on = [module.security_alb_ingress]
 }
 
 module "cognito" {
