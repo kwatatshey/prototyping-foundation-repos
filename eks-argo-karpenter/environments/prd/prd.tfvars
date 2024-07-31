@@ -6,7 +6,7 @@ iam_role_arn = "arn:aws:iam::363622845983:role/deployment-assumable-prod-prototy
 #------------------------------------------------------------------------------
 # VPC VALUES - BASE MODULE
 #------------------------------------------------------------------------------
-resource_prefix     = "fez"
+resource_prefix     = "fer"
 environment         = "prd"
 app_name            = "k8s"
 cluster_name        = "my-app-eks"
