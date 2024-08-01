@@ -1,7 +1,7 @@
 
 module "cluster" {
   # source                         = "./base/cluster"
-  source                         = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/cluster"
+  source                         = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/cluster?ref=v1.0.0"
   cluster_name                   = var.cluster_name
   vpc_id                         = module.vpc.vpc_id
   subnet_ids                     = module.vpc.private_subnets
@@ -14,15 +14,15 @@ module "cluster" {
   enable_creation_role_with_oidc = true
   oic_role_configurations        = var.oic_role_configurations
   cluster_additional_security_group_ids = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id
   ]
   #   control_plane_subnet_ids = module.vpc.private_subnets
 }
 
 module "fargate" {
   # source                    = "./base/fargate"
-  source                    = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/fargate"
+  source                    = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/fargate?ref=v1.0.0"
   for_each                  = var.fargate_profiles
   cluster_name              = module.cluster.cluster_name
   subnet_ids                = module.vpc.private_subnets
@@ -38,7 +38,7 @@ module "fargate" {
 # provision EKS cluster
 module "config" {
   # source                                   = "./config/"
-  source                                   = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/config"
+  source                                   = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/config?ref=v1.0.0"
   resource_prefix                          = var.resource_prefix
   environment                              = var.environment
   app_name                                 = var.app_name
@@ -70,7 +70,7 @@ module "config" {
   developer_roles = var.developer_roles
   # karpenter_node_iam_role_name             = module.karpenter.node_iam_role_name
   developer_user_group          = var.developer_user_group
-  ALB_SECURITY_GROUP_ID         = module.security-alb-ingress.security_group_id
+  ALB_SECURITY_GROUP_ID         = module.security_alb_ingress.security_group_id
   EKS_CLUSTER_SECURITY_GROUP_ID = module.cluster.cluster_primary_security_group_id
   vpc_id                        = module.vpc.vpc_id
   private_subnets               = module.vpc.private_subnets
@@ -78,13 +78,12 @@ module "config" {
   argocd_ingress_alb_name       = var.argocd_ingress_alb_name
   # grafana_api_key               = true
   security_groups = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id,
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id,
     module.cluster.cluster_primary_security_group_id
 
   ]
 }
-
 
 # module "observability-accelerator" {
 #   source                             = "./config/observability-accelerator"
@@ -99,7 +98,7 @@ module "config" {
 
 module "nodes" {
   # source                            = "./base/nodes" # Update with your correct path
-  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes"
+  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes?ref=v1.0.0"
   for_each                          = var.eks_managed_node_groups
   cluster_version                   = module.cluster.cluster_version
   cluster_service_cidr              = module.cluster.cluster_service_cidr
@@ -107,8 +106,8 @@ module "nodes" {
   eks_managed_node_groups           = var.eks_managed_node_groups
   cluster_primary_security_group_id = module.cluster.cluster_primary_security_group_id
   vpc_security_group_ids = [
-    module.security-alb-ingress.security_group_id,
-    module.security-node.security_group_id
+    module.security_alb_ingress.security_group_id,
+    module.security_node.security_group_id
   ]
   name            = each.key
   app_name        = var.app_name
@@ -133,14 +132,14 @@ module "nodes" {
 
 module "kms" {
   # source               = "./base/nodes/kms"
-  source               = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes/kms"
+  source               = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes/kms?ref=v1.0.0"
   cluster_iam_role_arn = module.cluster.cluster_iam_role_arn
   cluster_name         = module.cluster.cluster_name
 }
 
 module "vpc" {
   # source                  = "./network/vpc"
-  source                  = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//network/vpc"
+  source                  = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//network/vpc?ref=v1.0.0"
   resource_prefix         = var.resource_prefix
   environment             = var.environment
   app_name                = var.app_name
@@ -153,14 +152,13 @@ module "vpc" {
 
 module "addons" {
   # source                             = "./base/addons"
-  source                             = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/addons"
+  source                             = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/addons?ref=v1.0.0"
   cluster_name                       = module.cluster.cluster_name
   cluster_endpoint                   = module.cluster.cluster_endpoint
   cluster_version                    = module.cluster.cluster_version
   oidc_provider_arn                  = module.cluster.oidc_provider_arn
   cluster_certificate_authority_data = module.cluster.cluster_certificate_authority_data
 }
-
 
 # module "irsa" {
 #   source                   = "./base/irsa"
@@ -174,9 +172,9 @@ module "addons" {
 
 
 # Module for ALB Ingress Security Group
-module "security-alb-ingress" {
+module "security_alb_ingress" {
   # source                          = "./security"
-  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security"
+  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0"
   environment                     = var.environment
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-alb-ingress"
   description                     = "Security group for ALB ingress"
@@ -284,9 +282,9 @@ module "security-alb-ingress" {
 }
 
 # Module for Node Security Group
-module "security-node" {
+module "security_node" {
   # source                          = "./security"
-  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security"
+  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0"
   environment                     = var.environment
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-node"
   description                     = "Security group for nodes"
@@ -319,7 +317,7 @@ module "security-node" {
       to_port                  = 0
       protocol                 = -1
       description              = "Allow all incoming connections from ALB security group"
-      source_security_group_id = module.security-alb-ingress.security_group_id
+      source_security_group_id = module.security_alb_ingress.security_group_id
     },
   ]
 
@@ -352,12 +350,12 @@ module "security-node" {
       ipv6_cidr_blocks = "::/0"
     },
   ]
-  depends_on = [module.security-alb-ingress]
+  depends_on = [module.security_alb_ingress]
 }
 
 module "cognito" {
   # source                            = "./auths/cognito"
-  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//auths/cognito"
+  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//auths/cognito?ref=v1.0.0"
   name                              = "cognito"
   environment                       = var.environment
   label_order                       = ["name", "environment"]

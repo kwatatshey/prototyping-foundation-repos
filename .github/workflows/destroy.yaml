@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       environment_name:
-        description: 'destroy github environment'
+        description: 'Destroy GitHub environment'
         required: true
         default: 'destroy'
-  pull_request:
+  # pull_request:
   issue_comment:
     types: [created, edited]
 
@@ -30,6 +30,7 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
     env:
       ENVIRONMENT_NAME: ${{ github.event.inputs.environment_name || 'default-environment' }}
+      # default-environment is a placeholder for the default environment name. You can replace it with your actual default environment name like dev, staging, or prd.
 
     steps:
       - name: Checkout Repository
@@ -53,7 +54,7 @@ jobs:
       - name: Verify Terraform Version
         run: terraform --version
 
-      - name: Configure AWS credentials with OIDC assume role 
+      - name: Configure AWS credentials with OIDC assume role
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ env.AWS_ASSUMED_ROLE_ARN }}
@@ -80,19 +81,17 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve -var-file="environments/${ENVIRONMENT_NAME}/${ENVIRONMENT_NAME}.tfvars"
-
   comment_on_destroy:
     name: Comment on Destroy
     runs-on: ubuntu-latest
-    if: >-
+    if: >
       github.event_name == 'issue_comment' &&
-      github.event.comment.body == 'destroy competely' &&
+      github.event.comment.body == 'destroy completely' &&
       github.actor == 'assassin010'
-    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-      
+
       - name: Add Comment
         uses: allthatjazzleo/actions-pull-request-add-comment@master
         with:

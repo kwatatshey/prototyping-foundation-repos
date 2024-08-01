@@ -6,11 +6,11 @@ iam_role_arn = "arn:aws:iam::363622845983:role/deployment-assumable-prod-prototy
 #------------------------------------------------------------------------------
 # VPC VALUES - BASE MODULE
 #------------------------------------------------------------------------------
-resource_prefix     = "go"
-environment         = "dev"
+resource_prefix     = "fep"
+environment         = "prd"
 app_name            = "k8s"
 cluster_name        = "my-app-eks"
-iac_environment_tag = "dev"
+iac_environment_tag = "prd"
 
 main_network_block      = "10.0.0.0/16"
 cluster_azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
@@ -107,7 +107,7 @@ spot_termination_handler_chart_namespace = "kube-system"
 #------------------------------------------------------------------------------
 # IAM - CONFIG MODULE
 #------------------------------------------------------------------------------
-admin_roles          = ["eks-admin-role"]
+admin_roles          = ["eks-admin-role", "deployment-assumable-prod-prototyping"]
 developer_users      = ["Terraform", "tst"]
 developer_roles      = ["CrossplaneRole"]
 developer_user_group = "devepers-user-group"

@@ -140,6 +140,7 @@ variable "eks_managed_node_groups" {
       associate_public_ip_address = bool
     }))
   }))
+  description = "List of EKS managed node groups."
 }
 
 variable "iam_role_nodes_additional_policies" {
@@ -155,6 +156,7 @@ variable "oic_role_configurations" {
     service_account     = string
     policy_file         = string
   }))
+  description = "List of OIC role configurations."
 }
 
 
@@ -164,6 +166,7 @@ variable "fargate_profiles" {
     namespace           = string
     additional_policies = map(string)
   }))
+  description = "List of Fargate profiles."
 }
 
 # variable "argocd_subdomain" {
@@ -192,11 +195,11 @@ variable "iam_role_arn" {
   type        = string
 }
 
-variable "admin_role_arn" {
-  description = "Admin role ARN"
-  type        = string
-  default     = "arn:aws:iam::955769636964:role/eks-admin-role"
-}
+# variable "admin_role_arn" {
+#   description = "Admin role ARN"
+#   type        = string
+#   default     = "arn:aws:iam::955769636964:role/eks-admin-role"
+# }
 
 variable "project_owner_tag" {
   description = "The project owner tag"
@@ -220,4 +223,3 @@ variable "team_tag" {
   type        = string
   default     = "DevOps"
 }
-
