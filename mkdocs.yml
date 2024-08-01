@@ -29,6 +29,7 @@ site_description: >-
 # Directory where documentation files are located
 docs_dir: docs  # Update this if your docs directory is named differently or located elsewhere
 
+
 # Repository
 repo_name: squidfunk/mkdocs-material
 repo_url: https://github.com/squidfunk/mkdocs-material

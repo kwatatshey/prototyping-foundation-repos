@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <!-- Add custom CSS -->
+  <link rel="stylesheet" href="{{ base_url }}/overrides/extra.css">
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+  <!-- Custom footer content -->
+  <div class="custom-footer">
+    <p>Custom footer content goes here.</p>
+  </div>
+{% endblock %}
