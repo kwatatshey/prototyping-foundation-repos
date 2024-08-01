@@ -1,8 +1,13 @@
 name: 'Validate PR title'
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
   pull_request:
     types:
       - opened
