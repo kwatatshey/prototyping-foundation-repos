@@ -29,7 +29,7 @@ jobs:
       run:
         working-directory: ${{ env.WORKING_DIRECTORY }}
     env:
-      ENVIRONMENT_NAME: ${{ github.event.inputs.environment_name || 'default-environment' }}
+      ENVIRONMENT_NAME: ${{ github.event.inputs.environment_name || 'dev' }}
       # default-environment is a placeholder for the default environment name. You can replace it with your actual default environment name like dev, staging, or prd.
 
     steps:
