@@ -19,12 +19,16 @@
 # IN THE SOFTWARE.
 
 # Project information
-site_name: Material for MkDocs
+site_name: My Documentation  # Your project title
 site_url: https://squidfunk.github.io/mkdocs-material/
 site_author: Martin Donath
 site_description: >-
   Write your documentation in Markdown and create a professional static site in
   minutes – searchable, customizable, in 60+ languages, for all devices
+
+# Directory where documentation files are located
+docs_dir: docs  # Update this if your docs directory is named differently or located elsewhere
+
 
 # Repository
 repo_name: squidfunk/mkdocs-material
