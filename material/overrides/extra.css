@@ -3,12 +3,10 @@
     background-color: #333;
     color: #fff;
   }
-  
   /* Customize link colors */
   .md-nav__link {
     color: #009688;
   }
-  
   .custom-footer {
     text-align: center;
     padding: 20px;
