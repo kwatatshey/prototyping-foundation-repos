@@ -1,7 +1,7 @@
 
 module "cluster" {
-  # source                         = "./base/cluster"
-  source                         = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/cluster?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/base/cluster"
+  source                         = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/cluster?ref=v1.0.0s"
   cluster_name                   = var.cluster_name
   vpc_id                         = module.vpc.vpc_id
   subnet_ids                     = module.vpc.private_subnets
@@ -21,8 +21,8 @@ module "cluster" {
 }
 
 module "fargate" {
-  # source                    = "./base/fargate"
-  source                    = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/fargate?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/base/fargate"
+  source                    = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/fargate?ref=v1.0.0s"
   for_each                  = var.fargate_profiles
   cluster_name              = module.cluster.cluster_name
   subnet_ids                = module.vpc.private_subnets
@@ -37,8 +37,8 @@ module "fargate" {
 
 # provision EKS cluster
 module "config" {
-  # source                                   = "./config/"
-  source                                   = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/config?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/config"
+  source                                   = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/config?ref=v1.0.0s"
   resource_prefix                          = var.resource_prefix
   environment                              = var.environment
   app_name                                 = var.app_name
@@ -65,9 +65,10 @@ module "config" {
   # external_dns_values                      = var.external_dns_values
   argocd_ingress_name = var.argocd_ingress_name
   # argocd_subdomain    = var.argocd_subdomain
-  admin_roles     = var.admin_roles
-  developer_users = var.developer_users
-  developer_roles = var.developer_roles
+  admin_roles               = var.admin_roles
+  cross_account_admin_roles = var.cross_account_admin_roles
+  developer_users           = var.developer_users
+  developer_roles           = var.developer_roles
   # karpenter_node_iam_role_name             = module.karpenter.node_iam_role_name
   developer_user_group          = var.developer_user_group
   ALB_SECURITY_GROUP_ID         = module.security_alb_ingress.security_group_id
@@ -97,8 +98,8 @@ module "config" {
 # }
 
 module "nodes" {
-  # source                            = "./base/nodes" # Update with your correct path
-  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/base/nodes"
+  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes?ref=v1.0.0s"
   for_each                          = var.eks_managed_node_groups
   cluster_version                   = module.cluster.cluster_version
   cluster_service_cidr              = module.cluster.cluster_service_cidr
@@ -131,15 +132,17 @@ module "nodes" {
 }
 
 module "kms" {
-  # source               = "./base/nodes/kms"
-  source               = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes/kms?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/base/nodes/kms"
+  source               = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/nodes/kms?ref=v1.0.0s"
   cluster_iam_role_arn = module.cluster.cluster_iam_role_arn
-  cluster_name         = module.cluster.cluster_name
+  # cluster_iam_role_arn = "arn:aws:iam::537643952306:role/CrossplaneRole"
+  cluster_name = module.cluster.cluster_name
+  depends_on   = [module.cluster]
 }
 
 module "vpc" {
-  # source                  = "./network/vpc"
-  source                  = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//network/vpc?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/network/vpc"
+  source                  = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//network/vpc?ref=v1.0.0s"
   resource_prefix         = var.resource_prefix
   environment             = var.environment
   app_name                = var.app_name
@@ -151,8 +154,8 @@ module "vpc" {
 }
 
 module "addons" {
-  # source                             = "./base/addons"
-  source                             = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/addons?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/eks/base/addons"
+  source                             = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//eks/base/addons?ref=v1.0.0s"
   cluster_name                       = module.cluster.cluster_name
   cluster_endpoint                   = module.cluster.cluster_endpoint
   cluster_version                    = module.cluster.cluster_version
@@ -173,8 +176,8 @@ module "addons" {
 
 # Module for ALB Ingress Security Group
 module "security_alb_ingress" {
-  # source                          = "./security"
-  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/security"
+  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0s"
   environment                     = var.environment
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-alb-ingress"
   description                     = "Security group for ALB ingress"
@@ -283,8 +286,8 @@ module "security_alb_ingress" {
 
 # Module for Node Security Group
 module "security_node" {
-  # source                          = "./security"
-  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/security"
+  source                          = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//security?ref=v1.0.0s"
   environment                     = var.environment
   name                            = "${var.resource_prefix}-${var.environment}-${var.app_name}-node"
   description                     = "Security group for nodes"
@@ -354,8 +357,8 @@ module "security_node" {
 }
 
 module "cognito" {
-  # source                            = "./auths/cognito"
-  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//auths/cognito?ref=v1.0.0"
+  # source = "./prototyping-modules-repos/auths/cognito"
+  source                            = "git::git@github.com:kwatatshey/prototyping-modules-repos.git//auths/cognito?ref=v1.0.0s"
   name                              = "cognito"
   environment                       = var.environment
   label_order                       = ["name", "environment"]
