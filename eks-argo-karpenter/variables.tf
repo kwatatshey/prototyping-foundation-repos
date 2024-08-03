@@ -110,6 +110,12 @@ variable "admin_roles" {
   type        = list(string)
   description = "List of Kubernetes admin roles."
 }
+
+variable "cross_account_admin_roles" {
+  description = "The ARN of the cross account admin role"
+  type        = list(string)
+}
+
 variable "developer_roles" {
   type        = list(string)
   description = "List of Kubernetes developer roles."
