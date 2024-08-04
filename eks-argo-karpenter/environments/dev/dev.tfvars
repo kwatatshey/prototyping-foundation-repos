@@ -150,7 +150,6 @@ oic_role_configurations = {
   # }
 }
 
-
 fargate_profiles = {
   "argocd" = {
     name      = "argocd"

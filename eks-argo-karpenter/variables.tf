@@ -201,12 +201,6 @@ variable "iam_role_arn" {
   type        = string
 }
 
-# variable "admin_role_arn" {
-#   description = "Admin role ARN"
-#   type        = string
-#   default     = "arn:aws:iam::955769636964:role/eks-admin-role"
-# }
-
 variable "project_owner_tag" {
   description = "The project owner tag"
   type        = string
