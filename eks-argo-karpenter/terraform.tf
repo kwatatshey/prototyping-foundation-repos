@@ -6,8 +6,7 @@ terraform {
   }
   required_providers {
     aws = {
-      source = "hashicorp/aws"
-      # version = "~> 5.0"
+      source  = "hashicorp/aws"
       version = "~> 5.0, >= 5.31.0"
 
     }
@@ -32,7 +31,6 @@ terraform {
 
 provider "aws" {
   assume_role {
-    # role_arn = var.admin_role_arn
     role_arn = var.iam_role_arn
   }
   # profile = "eks_admin_user"

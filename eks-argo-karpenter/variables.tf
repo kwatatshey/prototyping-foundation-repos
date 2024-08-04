@@ -12,8 +12,6 @@ variable "app_name" {
   type        = string
   description = "Name of the application."
 }
-
-# for base/network.tf
 variable "cluster_name" {
   type        = string
   description = "EKS cluster name."
@@ -137,8 +135,7 @@ variable "eks_managed_node_groups" {
     max_size       = number
     desired_size   = number
     instance_types = list(string)
-    # tags           = optional(map(string), {}) # Default to an empty map
-    capacity_type = string
+    capacity_type  = string
     # use_custom_launch_template = bool
     # disk_size                  = number
     network_interfaces = list(object({
