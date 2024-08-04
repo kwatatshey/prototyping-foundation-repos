@@ -87,18 +87,28 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Set up SSH for Git
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-      #     export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-      #     git config --global core.sshCommand "$GIT_SSH_COMMAND"
+      - name: Enable Debug Logging
+        run: |
+            echo "TF_LOG=DEBUG" >> $GITHUB_ENV
+            echo "TF_LOG_PATH=terraform.log" >> $GITHUB_ENV
+  
+      - name: Print Environment Variables
+        run: printenv
+  
+      - name: List Files
+        run: ls -R
+
+      - name: Verify AWS Role with STS
+        run: |
+          role_arn=$(aws sts get-caller-identity --query 'Arn' --output text)
+          echo "Current AWS Role ARN: $role_arn"
 
       - name: Setup Terraform Init
         run: |
           terraform init -backend-config="environments/${{ env.ENVIRONMENT_NAME }}/${{ env.ENVIRONMENT_NAME }}.hcl"
+
+      - name: Verify Backend Config
+        run: cat environments/${{ env.ENVIRONMENT_NAME }}/${{ env.ENVIRONMENT_NAME }}.hcl 
 
       - name: Terraform Validate (Dev)
         id: tf-validate-dev
@@ -121,6 +131,11 @@ jobs:
 
       - name: Terraform Plan (Dev)
         run: terraform plan -var-file="environments/${{ env.ENVIRONMENT_NAME }}/${{ env.ENVIRONMENT_NAME }}.tfvars"
+
+      - name: Verify AWS Role with STS
+        run: |
+          role_arn=$(aws sts get-caller-identity --query 'Arn' --output text)
+          echo "Current AWS Role ARN: $role_arn"
 
       - name: Terraform Apply (Dev)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
