@@ -6,7 +6,7 @@ iam_role_arn = "arn:aws:iam::537643952306:role/deployment-assumable-dev-prototyp
 #------------------------------------------------------------------------------
 # VPC VALUES - BASE MODULE
 #------------------------------------------------------------------------------
-resource_prefix     = "col"
+resource_prefix     = "goc"
 environment         = "dev"
 app_name            = "k8s"
 cluster_name        = "my-app-eks"
@@ -149,7 +149,6 @@ oic_role_configurations = {
   #   policy_file         = "aws-load-balancer-controller.json"
   # }
 }
-
 
 fargate_profiles = {
   "argocd" = {

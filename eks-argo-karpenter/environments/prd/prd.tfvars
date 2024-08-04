@@ -107,10 +107,11 @@ spot_termination_handler_chart_namespace = "kube-system"
 #------------------------------------------------------------------------------
 # IAM - CONFIG MODULE
 #------------------------------------------------------------------------------
-admin_roles          = ["eks-admin-role", "deployment-assumable-prod-prototyping"]
-developer_users      = ["Terraform", "tst"]
-developer_roles      = ["CrossplaneRole"]
-developer_user_group = "devepers-user-group"
+admin_roles               = ["eks-admin-role", "deployment-assumable-prod-prototyping"]
+cross_account_admin_roles = ["arn:aws:iam::955769636964:role/deployment-terraform-prototyping-us-east-1-955769636964"]
+developer_users           = ["Terraform", "tst"]
+developer_roles           = ["CrossplaneRole"]
+developer_user_group      = "devepers-user-group"
 
 
 #------------------------------------------------------------------------------
